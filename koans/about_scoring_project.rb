@@ -29,8 +29,31 @@ require File.expand_path(File.dirname(__FILE__) + '/edgecase')
 #
 # Your goal is to write the score method.
 
+def extract_triplet(dice)
+  triplet = nil
+  (1..6).each do |i|
+    if dice.count(i) >= 3
+      3.times { dice.delete_at(dice.index(i)) }
+      triplet = i
+    end
+  end
+
+  return dice, triplet
+end
+
+def score_rolls(rolls)
+  100 * rolls.count(1) + 50 * rolls.count(5)
+end
+
+def score_triplet(triplet)
+  triplet == 1 ? 1000 : triplet * 100
+end
+
 def score(dice)
-  # You need to write this method
+  rolls, triplet = extract_triplet dice
+  result = score_rolls(rolls)
+  result += score_triplet(triplet) if triplet
+  result
 end
 
 class AboutScoringProject < EdgeCase::Koan
