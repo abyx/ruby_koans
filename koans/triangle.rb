@@ -14,6 +14,8 @@
 #   about_triangle_project_2.rb
 #
 def triangle(a, b, c)
+  raise TriangleError if [a, b, c].any? { |x| x <= 0 }
+  raise TriangleError if a + b <= c or b + c <= a or a + c <= b
   cases = { 3 => :scalene, 2 => :isosceles, 1 => :equilateral }
   cases[[a, b, c].uniq.size]
 end
